@@ -1,0 +1,17 @@
+.button__next {
+    transform: rotate(-45deg);
+    cursor: pointer;
+}
+
+.button__prev {
+    transform: rotate(135deg);
+    cursor: pointer;
+}
+
+.calendar__day {
+    cursor: pointer;
+}
+
+.calendar__day--current {
+    background: #42b983;
+}
