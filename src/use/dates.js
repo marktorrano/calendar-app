@@ -38,8 +38,8 @@ export default function useEventSpace() {
 
     const lastDaysOfPrevMonth = computed(() => {
         let days = [];
-        for (let day = firstDayIndex.value; day >= 0; day--) {
-            const dayResult = prevLastDayOfPrevMonth.value - day;
+        for (let day = firstDayIndex.value; day > 0; day--) {
+            const dayResult = prevLastDayOfPrevMonth.value - day + 1;
             const dateTime = new Date(selectedYear.value, selectedMonth.value, 0);
             const obj = {
                 day: dayResult,
