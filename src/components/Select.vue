@@ -1,11 +1,16 @@
 <template>
     <div class="md:w-1/2 px-3">
-        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" :for="label">
             {{label}}
         </label>
         <div class="relative">
             <select class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
-                    id="grid-state">
+                    :value="modelValue"
+                    v-bind="{
+                        ...$attrs,
+                        onChange: ($event) => { $emit('update:modelValue', $event.target.value)}
+                    }"
+                    :id="label">
                 <option v-for="(option, idx) in options" :key="idx" :value="option">{{option}}</option>
             </select>
             <div class="pointer-events-none absolute top-4 right-0 flex items-center px-2 text-grey-darker">
@@ -31,10 +36,12 @@
             },
             label: {
                 type: String,
-                default: () => {
-                    return ''
-                }
+                default: ''
             },
+            modelValue: {
+                type: [String, Number],
+                default: ''
+            }
 
         }
     }

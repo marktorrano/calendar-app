@@ -1,37 +1,45 @@
 <template>
     <div class="md:w-1/2 px-3 py-2">
-        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" :for="label">
             {{label}}
         </label>
         <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-               type="text" :placeholder="placeholder" :value="value"/>
+               :id="label"
+               :type="type"
+               :placeholder="placeholder"
+               :value="modelValue"
+               @input="$emit('update:modelValue', $event.target.value)"/>
     </div>
 </template>
 
 <script>
     export default {
-        setup() {
+        setup(props, context) {
+            const updateValue = (modelValue) => {
+                context.emit('update:modelValue', modelValue);
+            };
 
-            return {};
+            return {
+                updateValue
+            };
         },
+        emits: ['update:modelValue'],
         props: {
-            value: {
+            modelValue: {
+                type: [String, Number],
+                default: ''
+            },
+            type: {
                 type: String,
-                default: () => {
-                    return ''
-                }
+                default : 'text'
             },
             label: {
                 type: String,
-                default: () => {
-                    return ''
-                }
+                default: ''
             },
             placeholder: {
                 type: String,
-                default: () => {
-                    return ''
-                }
+                default: ''
             },
 
         }

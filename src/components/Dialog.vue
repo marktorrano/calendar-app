@@ -28,7 +28,8 @@
     import { getCurrentInstance } from 'vue'
 
     export default {
-        setup() {
+        emits: ['accept'],
+        setup(_, context) {
             const internalInstance = getCurrentInstance();
             const emitter = internalInstance.appContext.config.globalProperties.emitter;
             const acceptLabel = ref('Save');
@@ -37,6 +38,10 @@
 
             const backAction = function() {
                 visible.value = false;
+            };
+
+            const acceptAction = function() {
+                context.emit('accept')
             };
 
             emitter.on('toggleDialog', () => {
@@ -51,6 +56,7 @@
                 backLabel,
                 backAction,
                 visible,
+                acceptAction
             };
         },
         props: {
@@ -60,7 +66,7 @@
                     return 'Dialog'
                 }
             },
-            acceptAction: {
+            accept: {
                 type: Function,
                 default: () => {}
             }
