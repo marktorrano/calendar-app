@@ -8,6 +8,10 @@ module.exports = {
             },
             borderWidth: {
                 '1': '1px'
+            },
+            top: {
+                '2': '8px',
+                '4': '16px',
             }
         },
     },

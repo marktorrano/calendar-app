@@ -6,8 +6,8 @@
             <div class="datePage__contents flex h-full">
                 <div class="datePage__eventsHeader w-full flex justify-between p-4">
                     <h4 class="text-3xl">Events</h4>
-                    <button
-                            class="p-0 w-12 h-12 bg-green-400 rounded-full hover:bg-green-800 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
+                    <button class="p-0 w-12 h-12 bg-green-400 rounded-full hover:bg-green-800 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+                        @click="addEvent">
                         <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6 inline-block">
                             <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
                                 C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
@@ -25,18 +25,53 @@
             </div>
         </div>
     </div>
+    <Dialog :title="'Add Event'">
+        <div class="addEvent__form">
+            <Input :label="'Name'" :placeholder="'Name'"/>
+            <Select :options="eventOptions" :label="'Type'"></Select>
+        </div>
+    </Dialog>
 </template>
 
 <script>
-    import {useRouter} from 'vue-router'
+    import Dialog from '../components/Dialog'
+    import Select from '../components/Select'
+    import Input from '../components/Input'
+    import { getCurrentInstance } from 'vue'
 
     export default {
-        props: [
-            'date'
-        ],
+        components: {
+            Dialog,
+            Select,
+            Input
+        },
+        props:{
+            date: {
+                type: String,
+                default: () => {return ''}
+            },
+            eventOptions: {
+                type: Array,
+                default: () => {
+                    return [
+                        'Meeting',
+                        'Appointment',
+                        'Task',
+                    ]
+                }
+            },
+        },
         setup() {
-            window.route = useRouter;
-        }
+            const internalInstance = getCurrentInstance();
+            const emitter = internalInstance.appContext.config.globalProperties.emitter;
+            const addEvent = function() {
+                emitter.emit('toggleDialog');
+            };
+
+            return {
+                addEvent
+            }
+        },
     }
 
 </script>
