@@ -1,7 +1,7 @@
 <template>
     <div class="datePage container mx-auto justify-center flex flex-col px-40 pb-10 pt-4">
-        <div class="datePage__container w-full h-screen bg-white shadow-2xl flex flex-col align-top">
-            <div class="datePage__header p-4">Day: {{ date }}</div>
+        <div class="datePage__container w-full h-auto bg-white shadow-2xl flex flex-col align-top mt-8">
+            <div class="datePage__header p-4">Date: {{ date }}</div>
             <div class="divider border-1 border-gray-100"></div>
             <div class="datePage__contents flex">
                 <div class="datePage__eventsHeader w-full flex justify-between p-4">
@@ -16,7 +16,7 @@
                     </button>
                 </div>
             </div>
-            <div class="datePage__eventsList p-4 h-full">
+            <div class="datePage__eventsList p-4 min-h-0" v-if="currentEvents.length">
                 <div class="datePage__eventItem w-3/6 h-auto shadow-2xl p-2 rounded text-white font-bold my-2 relative"
                      :class="{
                         'bg-purple-400': event.eventType === 'Meeting',
@@ -34,6 +34,9 @@
                     <div class="">{{event.eventName}}</div>
                     <div class="text-xs rounded bg-white text-gray-700 inline px-4">{{event.eventType}}</div>
                 </div>
+            </div>
+            <div class="datePage__eventList text-center w-full py-8" v-else>
+                No available event for this date...Let's start adding some
             </div>
             <div class="divider border-1 border-gray-100"></div>
             <div class="datePage__footer mx-auto w-full flex justify-end px-4 py-4">
@@ -87,7 +90,7 @@
             };
 
             const removeEvent = (event) => {
-                store.commit("removeEvent", {id: event.uuid});
+                store.commit("removeEvent", {uuid: event.uuid});
                 store.commit("eventsByDate", {date: props.date});
             };
 

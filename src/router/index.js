@@ -13,11 +13,11 @@ const routes = [
     props: true,
     component: () => import(/* webpackChunkName: "datePage" */ '../views/DatePage.vue')
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
 export default router

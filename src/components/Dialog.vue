@@ -6,7 +6,7 @@
                     <div class="modal-header p-5 bg-gray-600 text-gray-900 rounded-t">
                         <h5 class="text-white text-2xl uppercase">{{title}}</h5>
                     </div>
-                    <div class="dialog__body p-5 h-full overflow-y-auto">
+                    <div class="dialog__body p-5 overflow-y-auto">
                         <slot></slot>
                     </div>
                     <div class="modal-footer py-3 px-5 border0-t text-right">

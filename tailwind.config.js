@@ -9,6 +9,9 @@ module.exports = {
             borderWidth: {
                 '1': '1px'
             },
+            borderRadius: {
+                '50': '50%'
+            },
             top: {
                 '2': '8px',
                 '4': '16px',

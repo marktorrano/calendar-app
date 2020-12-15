@@ -17,10 +17,7 @@ const store =  createStore({
             state.currentEvents = state.events.filter( event => event.eventDate === payload.date);
         },
         removeEvent(state, payload) {
-            const index = state.events.findIndex( event => event.uuid === payload.uuid);
-            if (index) {
-                state.events.splice(index, 1);
-            }
+            state.events = state.events.filter( event => event.uuid != payload.uuid);
         },
     },
     actions: {},

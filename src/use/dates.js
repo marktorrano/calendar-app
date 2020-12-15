@@ -32,8 +32,10 @@ export default function useEventSpace() {
         return new Date(date.value.getFullYear(), date.value.getMonth() + 1, 0).getDay();
     });
 
-    const lastDays = computed(() => {
-        return 14 - lastDayIndex.value - 1
+    const nextDays = computed(() => {
+        const numOfDays = 32 - new Date(date.value.getFullYear(), date.value.getMonth(), 32).getDate();
+        const additionalCells =  (firstDayIndex.value < lastDayIndex.value || numOfDays <= 29) ? 14 : 7;
+        return additionalCells - lastDayIndex.value - 1
     });
 
     const lastDaysOfPrevMonth = computed(() => {
@@ -54,8 +56,8 @@ export default function useEventSpace() {
 
     const currentMonthDays = computed(() => {
         let days = [];
-        for (let day = 0; monthDays.value >= day; day++) {
-            const dayResult = day + 1;
+        for (let day = 1; day <= lastDay.value; day++) {
+            const dayResult = day;
             const dateTime = new Date(selectedYear.value, selectedMonth.value, dayResult);
             const obj = {
                 day: dayResult,
@@ -70,7 +72,7 @@ export default function useEventSpace() {
 
     const firstDaysOfNextMonth = computed(() => {
         let days = [];
-        for (let day = 1; day <= lastDays.value; day++) {
+        for (let day = 1; day <= nextDays.value; day++) {
             const month = selectedMonth.value + 1;
             const dateTime = new Date(selectedYear.value, month , day);
             const obj = {
@@ -94,6 +96,10 @@ export default function useEventSpace() {
         date.value = new Date(date.value.setMonth(nextMonth));
     };
 
+    const goToCurrentMonth = function() {
+        date.value = new Date();
+    };
+
     return {
         nextMonth,
         previousMonth,
@@ -101,13 +107,13 @@ export default function useEventSpace() {
         prevLastDayOfPrevMonth,
         firstDayIndex,
         lastDayIndex,
-        lastDays,
         selectedMonth,
         selectedYear,
         currentDate,
         monthDays,
         lastDaysOfPrevMonth,
         firstDaysOfNextMonth,
-        currentMonthDays
+        currentMonthDays,
+        goToCurrentMonth
     };
 }
