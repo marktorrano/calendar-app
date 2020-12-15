@@ -86,6 +86,7 @@
             const emitter = internalInstance.appContext.config.globalProperties.emitter;
 
             const addEvent = () => {
+                event.name = '';
                 emitter.emit('toggleDialog');
             };
 
