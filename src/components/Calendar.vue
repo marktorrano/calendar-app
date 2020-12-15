@@ -1,7 +1,7 @@
 <template>
-    <div class="container w-full bg-gray-100 text-gray-900 mx-auto py-10">
+    <div class="container w-full text-gray-900 mx-auto py-10 shadow-2xl mt-4">
         <div class="calendar">
-            <div class="calendar__month flex justify-between p-20">
+            <div class="calendar__month flex justify-between px-20">
                 <i class="button__prev border-solid inline-block p-2 border-black border-t-0 border-r-2 border-b-2 border-l-0 p-6 cursor-pointer"
                    @click="previousMonth"></i>
                 <div class="calendar__date">
@@ -15,9 +15,27 @@
                 <div v-for="(day, index) in days" :key="index" class="w-1/7 flex justify-center">{{day}}</div>
             </div>
             <div class="calendar__days px-20 flex flex-wrap justify-start">
-                <div v-for="(data, index) in lastDaysOfPrevMonth" :key="index" class="w-1/7 h-40 border-2 p-1 m-0 previousMonth__day bg-gray-300 calendar__day">{{data.day}}</div>
-                <div v-for="(data, index) in currentMonthDays" :key="index" class="w-1/7 h-40 border-2 p-1 m-0 calendar__day">{{data.day}}</div>
-                <div v-for="(data, index) in firstDaysOfNextMonth" :key="index" class="w-1/7 h-40 border-2 p-1 m-0 nextMonth__day bg-gray-300 calendar__day">{{data.day}}</div>
+                <router-link :to="{ name: 'Date Page', params: { date: data.date}}"
+                             v-for="(data, index) in lastDaysOfPrevMonth"
+                             :key="index"
+                             class="w-1/7 h-40 border-2 p-1 m-0 previousMonth__day bg-gray-300 calendar__day">
+                    {{data.day}}
+                </router-link>
+                <router-link :to="{ name: 'Date Page', params: { date: data.date}}"
+                             v-for="(data, index) in currentMonthDays"
+                             :key="index"
+                             :class="{
+                                 'calendar__day--current' : currentDate === data.dateTimeString
+                             }"
+                             class="w-1/7 h-40 border-2 p-1 m-0 calendar__day">
+                    {{data.day}}
+                </router-link>
+                <router-link :to="{ name: 'Date Page', params: { date: data.date}}"
+                             v-for="(data, index) in firstDaysOfNextMonth"
+                             :key="index"
+                             class="w-1/7 h-40 border-2 p-1 m-0 nextMonth__day bg-gray-300 calendar__day">
+                    {{data.day}}
+                </router-link>
             </div>
         </div>
     </div>
@@ -27,7 +45,7 @@
     import useDates from '../use/dates';
 
     export default {
-        setup(){
+        setup() {
             const {
                 previousMonth,
                 nextMonth,

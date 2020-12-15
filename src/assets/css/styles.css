@@ -1,3 +1,11 @@
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 .button__next {
     transform: rotate(-45deg);
     cursor: pointer;
@@ -10,8 +18,10 @@
 
 .calendar__day {
     cursor: pointer;
+    transition: background 100ms ease;
 }
-
-.calendar__day--current {
+.calendar__day--current,
+.calendar__day:hover {
+    color: #ffff;
     background: #42b983;
 }

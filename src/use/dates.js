@@ -40,9 +40,11 @@ export default function useEventSpace() {
         let days = [];
         for (let day = firstDayIndex.value; day >= 0; day--) {
             const dayResult = prevLastDayOfPrevMonth.value - day;
+            const dateTime = new Date(selectedYear.value, selectedMonth.value, 0);
             const obj = {
                 day: dayResult,
-                dateTime: new Date(selectedYear.value, selectedMonth.value, 0),
+                dateTime: dateTime,
+                dateTimeString: dateTime.toDateString(),
                 date: `${selectedYear.value}-${selectedMonth.value}-${dayResult}`,
             };
             days.push(obj);
@@ -58,6 +60,7 @@ export default function useEventSpace() {
             const obj = {
                 day: dayResult,
                 dateTime,
+                dateTimeString: dateTime.toDateString(),
                 date: `${dateTime.getFullYear()}-${dateTime.getMonth() + 1}-${dayResult}`,
             };
             days.push(obj)
@@ -73,6 +76,7 @@ export default function useEventSpace() {
             const obj = {
                 day,
                 dateTime,
+                dateTimeString: dateTime.toDateString(),
                 date: `${dateTime.getFullYear()}-${dateTime.getMonth() + 1}-${day}`,
             };
             days.push(obj);
