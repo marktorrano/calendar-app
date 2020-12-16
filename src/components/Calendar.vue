@@ -27,56 +27,13 @@
             </div>
             <div class="calendar__days px-20 flex flex-wrap justify-start">
                 <router-link :to="{ name: 'Date Page', params: { date: data.date}}"
-                             v-for="(data, index) in lastDaysOfPrevMonth"
+                             v-for="(data, index) in allCalendarDays"
                              :key="index"
                              :class="{
-                                 'calendar__day--current' : currentDate === data.dateTimeString
-                             }"
-                             class="w-1/7 h-40 border-2 p-1 m-0 calendar__day bg-gray-300">
-                    <div class="calendar__dayLabel">{{data.day}}</div>
-                    <div class="calendar_events flex flex-wrap overflow-hidden">
-                        <div class="calendar_event w-4/12 flex justify-center align-middle m-2"
-                             v-for="(eventType, idx) in eventTypes" :key="idx">
-                             <span v-if="getEventCountByType(events, eventType, data.date)"
-                                   class="text-white font-bold text-sm p-1 w-full text-center rounded shadow-lg"
-                                   :class="{
-                                    'bg-purple-400': eventType === 'Meeting',
-                                    'bg-yellow-500': eventType === 'Appointment',
-                                    'bg-blue-400': eventType === 'Task',
-                                 }"
-                             >{{getEventCountByType(events, eventType, data.date)}}</span>
-                        </div>
-                    </div>
-                </router-link>
-                <router-link :to="{ name: 'Date Page', params: { date: data.date}}"
-                             v-for="(data, index) in currentMonthDays"
-                             :key="index"
-                             :class="{
-                                 'calendar__day--current' : currentDate === data.dateTimeString
+                                 'calendar__day--current' : currentDate === data.dateTimeString,
+                                 'bg-gray-300' : data.muted
                              }"
                              class="w-1/7 h-40 border-2 p-1 m-0 calendar__day">
-                    <div class="calendar__dayLabel">{{data.day}}</div>
-                    <div class="calendar_events flex flex-wrap overflow-hidden">
-                        <div class="calendar_event w-4/12 flex justify-center align-middle m-2"
-                             v-for="(eventType, idx) in eventTypes" :key="idx">
-                             <span v-if="getEventCountByType(events, eventType, data.date)"
-                                   class="text-white font-bold text-sm p-1 w-full text-center rounded shadow-lg"
-                                   :class="{
-                                    'bg-purple-400': eventType === 'Meeting',
-                                    'bg-yellow-500': eventType === 'Appointment',
-                                    'bg-blue-400': eventType === 'Task',
-                                 }"
-                             >{{getEventCountByType(events, eventType, data.date)}}</span>
-                        </div>
-                    </div>
-                </router-link>
-                <router-link :to="{ name: 'Date Page', params: { date: data.date}}"
-                             v-for="(data, index) in firstDaysOfNextMonth"
-                             :key="index"
-                             :class="{
-                                 'calendar__day--current' : currentDate === data.dateTimeString
-                             }"
-                             class="w-1/7 h-40 border-2 p-1 m-0 calendar__day bg-gray-300">
                     <div class="calendar__dayLabel">{{data.day}}</div>
                     <div class="calendar_events flex flex-wrap overflow-hidden">
                         <div class="calendar_event w-4/12 flex justify-center align-middle m-2"
@@ -99,14 +56,13 @@
 
 <script>
     import useDates from '../use/dates';
-    import {mapGetters, useStore} from 'vuex'
+    import {mapGetters} from 'vuex'
 
     export default {
         computed: {
             ...mapGetters(['events'])
         },
         setup() {
-            window.store = useStore();
             const getEventCountByType = (events, type, date) => {
                 const list = [];
                 events.forEach(function(evt) {
@@ -116,15 +72,6 @@
                 });
                 return list.length;
             };
-            const eventsByDate = (events, date) => {
-                const list = [];
-                events.forEach(function(evt) {
-                   if (evt.eventDate === date) {
-                       list.push(evt);
-                   }
-                });
-                return list;
-            };
 
             const {
                 lastDays,
@@ -133,10 +80,8 @@
                 selectedMonth,
                 selectedYear,
                 currentDate,
-                lastDaysOfPrevMonth,
-                currentMonthDays,
-                firstDaysOfNextMonth,
-                goToCurrentMonth
+                goToCurrentMonth,
+                allCalendarDays
             } = useDates();
             return {
                 lastDays,
@@ -145,12 +90,9 @@
                 selectedMonth,
                 selectedYear,
                 currentDate,
-                lastDaysOfPrevMonth,
-                currentMonthDays,
-                firstDaysOfNextMonth,
-                eventsByDate,
                 getEventCountByType,
-                goToCurrentMonth
+                goToCurrentMonth,
+                allCalendarDays
             };
         },
         props: {
@@ -194,7 +136,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

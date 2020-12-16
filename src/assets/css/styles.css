@@ -18,8 +18,9 @@ body {
 
 .calendar__day {
     cursor: pointer;
-    transition: background 100ms ease;
+    transition: background 50ms ease;
 }
+
 .calendar__day--current,
 .calendar__day:hover {
     color: #ffff;

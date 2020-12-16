@@ -51,6 +51,7 @@
             emitter.on('closeDialog', () => {
                 backAction();
             });
+
             return {
                 acceptLabel,
                 backLabel,

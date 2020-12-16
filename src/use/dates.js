@@ -2,6 +2,7 @@ import { ref, computed } from "vue";
 
 export default function useEventSpace() {
     const date = ref(new Date());
+
     const currentDate = ref(new Date().toDateString());
 
     const selectedMonth = computed(() => {
@@ -47,6 +48,7 @@ export default function useEventSpace() {
                 day: dayResult,
                 dateTime: dateTime,
                 dateTimeString: dateTime.toDateString(),
+                muted: true,
                 date: `${selectedYear.value}-${selectedMonth.value}-${dayResult}`,
             };
             days.push(obj);
@@ -63,6 +65,7 @@ export default function useEventSpace() {
                 day: dayResult,
                 dateTime,
                 dateTimeString: dateTime.toDateString(),
+                muted: false,
                 date: `${dateTime.getFullYear()}-${dateTime.getMonth() + 1}-${dayResult}`,
             };
             days.push(obj)
@@ -79,11 +82,16 @@ export default function useEventSpace() {
                 day,
                 dateTime,
                 dateTimeString: dateTime.toDateString(),
+                muted: true,
                 date: `${dateTime.getFullYear()}-${dateTime.getMonth() + 1}-${day}`,
             };
             days.push(obj);
         }
         return days;
+    });
+
+    const allCalendarDays = computed(() => {
+        return lastDaysOfPrevMonth.value.concat(currentMonthDays.value, firstDaysOfNextMonth.value);
     });
 
     const previousMonth = function() {
@@ -104,7 +112,6 @@ export default function useEventSpace() {
         nextMonth,
         previousMonth,
         lastDay,
-        prevLastDayOfPrevMonth,
         firstDayIndex,
         lastDayIndex,
         selectedMonth,
@@ -112,8 +119,7 @@ export default function useEventSpace() {
         currentDate,
         monthDays,
         lastDaysOfPrevMonth,
-        firstDaysOfNextMonth,
-        currentMonthDays,
-        goToCurrentMonth
+        goToCurrentMonth,
+        allCalendarDays
     };
 }

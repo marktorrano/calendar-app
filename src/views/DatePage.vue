@@ -75,12 +75,15 @@
         },
         setup(props) {
             const store = useStore();
+
             store.commit("eventsByDate", {date: props.date});
+
             const event = reactive({
                 name: '',
                 type: 'Meeting',
                 storedEvents: []
             });
+
             const internalInstance = getCurrentInstance();
 
             const emitter = internalInstance.appContext.config.globalProperties.emitter;
