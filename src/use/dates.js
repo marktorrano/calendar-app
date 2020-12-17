@@ -26,7 +26,7 @@ export default function useEventSpace() {
     });
 
     const firstDayIndex = computed(() => {
-        return date.value.getDay();
+        return new Date(date.value.getFullYear(), date.value.getMonth(), 1).getDay();
     });
 
     const lastDayIndex = computed(() => {
